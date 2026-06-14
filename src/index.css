@@ -61,6 +61,7 @@ html, body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   width: 100vw;
   position: relative;
 }
@@ -806,11 +807,13 @@ a:hover {
 }
 
 .code-copy-btn {
-  position: absolute;
+  position: sticky;
   top: 0.5rem;
   right: 0.5rem;
+  float: right;
+  margin-bottom: -22px;
   padding: 0.25rem 0.5rem;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.6);
   border: 1px solid var(--border-glass);
   border-radius: 4px;
   color: var(--text-muted);
@@ -951,6 +954,12 @@ pre:hover .code-copy-btn {
   max-height: 100px;
   overflow-y: auto;
   transition: all var(--transition-fast);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.chat-input::-webkit-scrollbar {
+  display: none;
 }
 
 .chat-input:focus {
