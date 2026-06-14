@@ -48,7 +48,7 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
 
     // Guard fallback API key usage limits
     if (!apiKey) {
-      if (fallbackCount >= 10) {
+      if (fallbackCount >= 5) {
         setShowLimitModal(true);
         return;
       }
@@ -111,7 +111,7 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
           <Bot size={48} style={{ color: 'var(--color-primary)', filter: 'drop-shadow(0 0 4px var(--color-primary))' }} />
           <h2>Try DevHub.AI Chatbot</h2>
           <p>
-            You don't have a personal Google AI Studio API key configured. Would you like to try the chatbot using the creator's API Key? (Maximum 10 messages).
+            You don't have a personal Google AI Studio API key configured. Would you like to try the chatbot using the creator's API Key? (Maximum 5 messages).
           </p>
           <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', width: '100%' }}>
             <button 
@@ -148,7 +148,7 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
               <AlertCircle size={48} style={{ color: 'var(--color-accent)' }} />
               <h2>Obrolan Gratis Habis</h2>
               <p>
-                Anda telah mencapai batas maksimal 10 obrolan gratis menggunakan API Key kreator. 
+                Anda telah mencapai batas maksimal 5 obrolan gratis menggunakan API Key kreator. 
                 Silakan masukkan API Key Google AI Studio Anda sendiri untuk melanjutkan.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', width: '100%', marginTop: '0.5rem' }}>

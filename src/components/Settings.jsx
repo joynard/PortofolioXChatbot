@@ -137,7 +137,7 @@ function Settings({ apiKey, setApiKey, githubUsername, setGithubUsername, modelN
           )}
 
           <div className="form-group">
-            <label htmlFor="github-username-input">GitHub Username</label>
+            <label htmlFor="github-username-input">GitHub Username (Optional)</label>
             <div className="input-container">
               <Github className="input-icon" size={18} />
               <input
@@ -147,11 +147,10 @@ function Settings({ apiKey, setApiKey, githubUsername, setGithubUsername, modelN
                 value={localUsername}
                 onChange={(e) => setLocalUsername(e.target.value)}
                 className="input-field"
-                required
               />
             </div>
             <p className="settings-header" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
-              This will fetch your public repositories and profile statistics to build your portfolio.
+              This will fetch your public repositories and profile statistics to build your portfolio. Leave blank to showcase the creator's portfolio (@joynard).
             </p>
           </div>
 
