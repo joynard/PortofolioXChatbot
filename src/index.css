@@ -929,6 +929,26 @@ a:hover {
   color: var(--text-primary);
 }
 
+.footer-credit {
+  text-align: center;
+  padding: 0.75rem 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-family: var(--font-heading);
+  letter-spacing: 0.05em;
+  opacity: 0.85;
+}
+
+.footer-credit a {
+  color: var(--color-primary);
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+
+.footer-credit a:hover {
+  color: var(--color-secondary);
+}
+
 /* Media Queries for Mobile Responsiveness */
 @media (max-width: 600px) {
   /* Body & App Container */
