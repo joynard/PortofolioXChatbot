@@ -2,10 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Key, Cpu, Github, Save, CheckCircle, Info } from 'lucide-react';
 
 const PRESET_MODELS = [
-  { id: 'gemma-2-27b-it', name: 'Gemma 2 27B (IT)' },
-  { id: 'gemma-2-9b-it', name: 'Gemma 2 9B (IT)' },
+  { id: 'gemma-4-31b', name: 'Gemma 4 31B' },
+  { id: 'gemma-4-26b', name: 'Gemma 4 26B' },
+  { id: 'gemini-3.5-flash', name: 'Gemini 3.5 Flash' },
+  { id: 'gemini-3.1-pro', name: 'Gemini 3.1 Pro' },
+  { id: 'gemini-3.1-flash-lite', name: 'Gemini 3.1 Flash Lite' },
+  { id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro' },
   { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash' },
-  { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro' },
+  { id: 'gemini-2.5-flash-lite', name: 'Gemini 2.5 Flash Lite' },
+  { id: 'gemini-2.0-flash', name: 'Gemini 2 Flash' },
+  { id: 'gemini-2.0-flash-lite', name: 'Gemini 2 Flash Lite' },
+  { id: 'gemini-2.5-flash-tts', name: 'Gemini 2.5 Flash TTS' },
+  { id: 'gemini-2.5-pro-tts', name: 'Gemini 2.5 Pro TTS' },
 ];
 
 function Settings({ apiKey, setApiKey, githubUsername, setGithubUsername, modelName, setModelName }) {
