@@ -1,10 +1,10 @@
 import React from 'react';
 import { Bot, FolderGit2, MessageSquareCode, Settings as SettingsIcon } from 'lucide-react';
 
-function Navbar({ activeTab, setActiveTab }) {
+function Navbar({ activeTab, setActiveTab, isHeaderHidden }) {
   return (
-    <header className="glass-panel navbar">
-      <div className="brand">
+    <header className={`glass-panel navbar ${isHeaderHidden ? 'navbar-hidden' : ''}`}>
+      <div className={`brand ${activeTab === 'chat' ? 'hide-on-mobile' : ''}`}>
         <Bot size={24} />
         <span>DevHub.AI</span>
       </div>

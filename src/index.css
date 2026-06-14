@@ -141,6 +141,7 @@ a:hover {
   padding: 1rem 1.5rem;
   margin: 1rem 1.5rem 0.5rem 1.5rem;
   height: 70px;
+  transition: transform var(--transition-normal), opacity var(--transition-normal), margin var(--transition-normal), padding var(--transition-normal), height var(--transition-normal);
 }
 
 .brand {
@@ -744,8 +745,20 @@ a:hover {
   box-shadow: 0 0 10px rgba(217, 119, 6, 0.15);
 }
 
+.chat-bubble-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.chat-bubble-container.user .chat-bubble-wrapper {
+  align-items: flex-end;
+}
+
 .chat-bubble {
-  max-width: 75%;
+  width: 100%;
   padding: 0.85rem 1.25rem;
   border-radius: 14px;
   line-height: 1.5;
@@ -764,6 +777,66 @@ a:hover {
   border: 1px solid hsla(43, 85%, 65%, 0.25);
   border-top-right-radius: 2px;
   color: var(--text-primary);
+}
+
+.bubble-copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  margin-top: 0.25rem;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: all var(--transition-fast);
+  font-family: var(--font-heading);
+}
+
+.bubble-copy-btn:hover {
+  opacity: 1;
+  color: var(--color-primary);
+}
+
+.bubble-copy-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
+.code-copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-glass);
+  border-radius: 4px;
+  color: var(--text-muted);
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  opacity: 0;
+  z-index: 10;
+}
+
+pre:hover .code-copy-btn {
+  opacity: 1;
+}
+
+.code-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+}
+
+.code-copy-btn.copied {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: hsl(150, 84%, 48%);
 }
 
 /* Chat Markdown Formatting */
@@ -996,8 +1069,23 @@ a:hover {
     gap: 0.75rem;
   }
   
+  .navbar.navbar-hidden {
+    transform: translateY(-120%);
+    opacity: 0;
+    pointer-events: none;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    overflow: hidden;
+  }
+  
   .brand {
     font-size: 1.1rem;
+  }
+
+  .brand.hide-on-mobile {
+    display: none !important;
   }
 
   .nav-links {
@@ -1084,8 +1172,11 @@ a:hover {
     font-size: 1.4rem !important;
   }
 
+  .chat-bubble-wrapper {
+    max-width: 95% !important;
+  }
+
   .chat-bubble {
-    max-width: 90%;
     font-size: 0.85rem;
     padding: 0.7rem 0.95rem;
   }

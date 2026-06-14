@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, Bot, AlertCircle, Settings, Trash2, ArrowRight } from 'lucide-react';
+import { Send, Bot, AlertCircle, Settings, Trash2, ArrowRight, Copy, Check } from 'lucide-react';
 import { sendChatMessage } from '../services/ai';
 import { marked } from 'marked';
 
@@ -40,8 +40,50 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
   const [useFallback, setUseFallback] = useState(() => sessionStorage.getItem('use_fallback_api') || 'prompt');
   const [fallbackCount, setFallbackCount] = useState(() => parseInt(localStorage.getItem('fallback_api_count') || '0', 10));
   const [showLimitModal, setShowLimitModal] = useState(false);
+  const [copiedIndex, setCopiedIndex] = useState(null);
   
   const messagesEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
+
+  // Inject copy buttons to code blocks dynamically when messages load
+  useEffect(() => {
+    if (!chatContainerRef.current) return;
+    const preElements = chatContainerRef.current.querySelectorAll('pre');
+    preElements.forEach((pre) => {
+      if (pre.querySelector('.code-copy-btn')) return;
+
+      const button = document.createElement('button');
+      button.className = 'code-copy-btn';
+      button.type = 'button';
+      button.innerHTML = '<span>Copy</span>';
+      
+      pre.style.position = 'relative';
+
+      button.addEventListener('click', () => {
+        const codeElement = pre.querySelector('code');
+        if (codeElement) {
+          const codeText = codeElement.innerText;
+          navigator.clipboard.writeText(codeText).then(() => {
+            button.innerHTML = '<span>Copied!</span>';
+            button.classList.add('copied');
+            setTimeout(() => {
+              button.innerHTML = '<span>Copy</span>';
+              button.classList.remove('copied');
+            }, 2000);
+          });
+        }
+      });
+
+      pre.appendChild(button);
+    });
+  }, [messages, isLoading]);
+
+  const handleCopyText = (text, index) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedIndex(index);
+      setTimeout(() => setCopiedIndex(null), 2000);
+    });
+  };
 
   // Keep scroll focused on latest message
   useEffect(() => {
@@ -157,10 +199,10 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
           <div className="modal-backdrop">
             <div className="glass-panel welcome-message" style={{ padding: '2.5rem', maxWidth: '450px', background: 'var(--surf-glass)', backdropFilter: 'blur(20px)' }}>
               <AlertCircle size={48} style={{ color: 'var(--color-accent)' }} />
-              <h2>Obrolan Gratis Habis</h2>
+              <h2>Free Chats Exhausted</h2>
               <p>
-                Anda telah mencapai batas maksimal 5 obrolan gratis menggunakan API Key kreator. 
-                Silakan masukkan API Key Google AI Studio Anda sendiri untuk melanjutkan.
+                You have reached the maximum limit of 5 free chats using the creator's API Key. 
+                Please enter your own Google AI Studio API Key to continue.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', width: '100%', marginTop: '0.5rem' }}>
                 <a 
@@ -170,7 +212,7 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
                   className="btn-primary"
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
                 >
-                  Dapatkan API Key Gratis
+                  Get Free API Key
                 </a>
                 <a 
                   href="https://ai.google.dev/gemini-api/docs/quickstart" 
@@ -179,7 +221,7 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
                   className="btn-github"
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
                 >
-                  Baca Tutorial Setup
+                  Read Setup Tutorial
                 </a>
                 <button 
                   id="go-settings-limit-btn"
@@ -190,7 +232,7 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
                   className="btn-github"
                   style={{ borderColor: 'var(--color-primary)', color: 'var(--color-primary)' }}
                 >
-                  Masukkan API Key di Settings
+                  Enter API Key in Settings
                 </button>
               </div>
             </div>
@@ -217,7 +259,7 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
         </div>
 
         {/* Message Panel */}
-        <div className="chat-messages">
+        <div className="chat-messages" ref={chatContainerRef}>
           {messages.length === 0 ? (
             <div className="welcome-message">
               <Bot size={48} />
@@ -243,25 +285,36 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
           ) : (
             messages.map((msg, index) => (
               <div key={index} className={`chat-bubble-container ${msg.sender}`}>
-                <div className="chat-avatar">
-                  {msg.sender === 'user' ? 'ME' : 'AI'}
+                <div className="chat-bubble-wrapper">
+                  <div 
+                    className="chat-bubble"
+                    dangerouslySetInnerHTML={formatMessageText(msg.text)}
+                  />
+                  {msg.sender === 'ai' && (
+                    <button 
+                      type="button"
+                      onClick={() => handleCopyText(msg.text, index)} 
+                      className="bubble-copy-btn"
+                      title="Copy response"
+                    >
+                      {copiedIndex === index ? <Check size={12} /> : <Copy size={12} />}
+                      <span>{copiedIndex === index ? 'Copied' : 'Copy'}</span>
+                    </button>
+                  )}
                 </div>
-                <div 
-                  className="chat-bubble"
-                  dangerouslySetInnerHTML={formatMessageText(msg.text)}
-                />
               </div>
             ))
           )}
 
           {isLoading && (
             <div className="chat-bubble-container ai">
-              <div className="chat-avatar">AI</div>
-              <div className="chat-bubble">
-                <div className="typing-indicator">
-                  <div className="typing-dot"></div>
-                  <div className="typing-dot"></div>
-                  <div className="typing-dot"></div>
+              <div className="chat-bubble-wrapper">
+                <div className="chat-bubble">
+                  <div className="typing-indicator">
+                    <div className="typing-dot"></div>
+                    <div className="typing-dot"></div>
+                    <div className="typing-dot"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -294,6 +347,9 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
               onChange={(e) => setInputValue(e.target.value)}
               disabled={isLoading}
               className="chat-input"
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck="false"
             />
             <button 
               id="send-message-btn"
