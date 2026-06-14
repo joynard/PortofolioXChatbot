@@ -10,11 +10,13 @@ marked.setOptions({
 });
 
 const SUGGESTED_PROMPTS = [
-  "Explain the core features of the Gemma 2 models.",
+  "Explain the core features of the Gemma 4 models.",
   "How can I set up automated deployments with GitHub Actions?",
   "Write a clean CSS glassmorphic card design template.",
   "Give me ideas for advanced features to add to this chatbot app."
 ];
+
+const CREATOR_FALLBACK_API_KEY = import.meta.env.VITE_CREATOR_API_KEY || "";
 
 function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
   const [messages, setMessages] = useState(() => {
@@ -24,6 +26,9 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [useFallback, setUseFallback] = useState(() => sessionStorage.getItem('use_fallback_api') || 'prompt');
+  const [fallbackCount, setFallbackCount] = useState(() => parseInt(localStorage.getItem('fallback_api_count') || '0', 10));
+  const [showLimitModal, setShowLimitModal] = useState(false);
   
   const messagesEndRef = useRef(null);
 
@@ -41,6 +46,14 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
     const text = textToSend || inputValue;
     if (!text.trim() || isLoading) return;
 
+    // Guard fallback API key usage limits
+    if (!apiKey) {
+      if (fallbackCount >= 10) {
+        setShowLimitModal(true);
+        return;
+      }
+    }
+
     setErrorMessage('');
     const userMessage = { sender: 'user', text };
     
@@ -52,9 +65,20 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
     setIsLoading(true);
 
     try {
-      const response = await sendChatMessage(apiKey, modelName, messages, text);
+      const activeKey = apiKey || CREATOR_FALLBACK_API_KEY;
+      if (!activeKey) {
+        throw new Error('Creator fallback API key is not configured. Please enter your own API key in Settings.');
+      }
+      const response = await sendChatMessage(activeKey, modelName, messages, text);
       const aiMessage = { sender: 'ai', text: response };
       setMessages(prev => [...prev, aiMessage]);
+
+      // Increment fallback usage count
+      if (!apiKey) {
+        const nextCount = fallbackCount + 1;
+        setFallbackCount(nextCount);
+        localStorage.setItem('fallback_api_count', nextCount.toString());
+      }
     } catch (error) {
       setErrorMessage(error.message || 'An unexpected error occurred while communicating with the AI.');
     } finally {
@@ -79,21 +103,37 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
     }
   };
 
-  // If API key is missing, show configuration prompt
-  if (!apiKey) {
+  // If API key is missing and they haven't accepted the fallback key yet
+  if (!apiKey && useFallback === 'prompt') {
     return (
       <div className="tab-content" style={{ justifyContent: 'center' }}>
-        <div className="glass-panel welcome-message" style={{ padding: '2.5rem' }}>
-          <AlertCircle size={48} style={{ color: 'var(--color-accent)', filter: 'drop-shadow(0 0 4px var(--color-accent))' }} />
-          <h2>API Key Configuration Required</h2>
+        <div className="glass-panel welcome-message" style={{ padding: '2.5rem', maxWidth: '500px' }}>
+          <Bot size={48} style={{ color: 'var(--color-primary)', filter: 'drop-shadow(0 0 4px var(--color-primary))' }} />
+          <h2>Try DevHub.AI Chatbot</h2>
           <p>
-            To activate the AI chatbot, you need to configure your Google AI Studio API Key. 
-            This is a security practice that ensures your API usage is private and billed directly to your credentials.
+            You don't have a personal Google AI Studio API key configured. Would you like to try the chatbot using the creator's API Key? (Maximum 10 messages).
           </p>
-          <button id="configure-api-btn" onClick={onNavigateToSettings} className="btn-primary" style={{ marginTop: '1rem' }}>
-            <Settings size={18} />
-            <span>Go to Settings</span>
-          </button>
+          <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', width: '100%' }}>
+            <button 
+              id="try-fallback-btn"
+              onClick={() => {
+                setUseFallback('yes');
+                sessionStorage.setItem('use_fallback_api', 'yes');
+              }} 
+              className="btn-primary"
+              style={{ flex: 1 }}
+            >
+              Yes, Try It
+            </button>
+            <button 
+              id="configure-own-key-btn"
+              onClick={onNavigateToSettings} 
+              className="btn-github"
+              style={{ flex: 1 }}
+            >
+              No, Enter My Key
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -102,6 +142,49 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
   return (
     <div className="tab-content">
       <div className="glass-panel chat-layout">
+        {showLimitModal && (
+          <div className="modal-backdrop">
+            <div className="glass-panel welcome-message" style={{ padding: '2.5rem', maxWidth: '450px', background: 'var(--surf-glass)', backdropFilter: 'blur(20px)' }}>
+              <AlertCircle size={48} style={{ color: 'var(--color-accent)' }} />
+              <h2>Obrolan Gratis Habis</h2>
+              <p>
+                Anda telah mencapai batas maksimal 10 obrolan gratis menggunakan API Key kreator. 
+                Silakan masukkan API Key Google AI Studio Anda sendiri untuk melanjutkan.
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', width: '100%', marginTop: '0.5rem' }}>
+                <a 
+                  href="https://aistudio.google.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="btn-primary"
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                >
+                  Dapatkan API Key Gratis
+                </a>
+                <a 
+                  href="https://ai.google.dev/gemini-api/docs/quickstart" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="btn-github"
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                >
+                  Baca Tutorial Setup
+                </a>
+                <button 
+                  id="go-settings-limit-btn"
+                  onClick={() => {
+                    setShowLimitModal(false);
+                    onNavigateToSettings();
+                  }} 
+                  className="btn-github"
+                  style={{ borderColor: 'var(--color-primary)', color: 'var(--color-primary)' }}
+                >
+                  Masukkan API Key di Settings
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         
         {/* Banner */}
         <div className="chat-banner">

@@ -29,7 +29,8 @@ function App() {
       <main className="app-container">
         {activeTab === 'portfolio' && (
           <Portfolio 
-            githubUsername={githubUsername} 
+            githubUsername={githubUsername || 'joynard'} 
+            isCreatorFallback={!githubUsername}
             onNavigateToSettings={() => setActiveTab('settings')}
           />
         )}

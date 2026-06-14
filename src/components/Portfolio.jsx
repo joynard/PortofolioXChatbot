@@ -23,7 +23,7 @@ const LANG_COLORS = {
   Shell: '#89e051',
 };
 
-function Portfolio({ githubUsername, onNavigateToSettings }) {
+function Portfolio({ githubUsername, onNavigateToSettings, isCreatorFallback }) {
   const [profile, setProfile] = useState(() => {
     const saved = sessionStorage.getItem('github_profile');
     return saved ? JSON.parse(saved) : null;
@@ -79,26 +79,6 @@ function Portfolio({ githubUsername, onNavigateToSettings }) {
     return nameMatches || descMatches || langMatches;
   });
 
-  // If username is not set, prompt setup
-  if (!githubUsername) {
-    return (
-      <div className="tab-content" style={{ justifyContent: 'center' }}>
-        <div className="glass-panel welcome-message" style={{ padding: '2.5rem' }}>
-          <Github size={48} />
-          <h2>GitHub Portfolio Integration</h2>
-          <p>
-            You have not configured your GitHub username yet. Set up your username in the Settings tab 
-            to showcase your repositories, stats, and profile details here.
-          </p>
-          <button id="configure-username-btn" onClick={onNavigateToSettings} className="btn-primary" style={{ marginTop: '1rem' }}>
-            <Settings size={18} />
-            <span>Go to Settings</span>
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   if (loading) {
     return (
       <div className="tab-content">
@@ -144,6 +124,14 @@ function Portfolio({ githubUsername, onNavigateToSettings }) {
               alt={`${profile.name || profile.login}'s avatar`} 
               className="profile-avatar"
             />
+            {isCreatorFallback && (
+              <div className="status-badge warning" style={{ fontSize: '0.75rem', padding: '0.6rem 0.8rem', width: '100%', display: 'flex', flexDirection: 'column', gap: '0.15rem', textAlign: 'center', lineHeight: '1.3' }}>
+                <span style={{ fontWeight: '700' }}>Creator Hall of Fame</span>
+                <span style={{ fontSize: '0.7rem', opacity: 0.85 }}>
+                  Showing creator's portfolio since no username was configured.
+                </span>
+              </div>
+            )}
             <div>
               <h2 className="profile-name">{profile.name || profile.login}</h2>
               <span className="profile-username">@{profile.login}</span>

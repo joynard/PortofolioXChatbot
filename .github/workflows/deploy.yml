@@ -20,6 +20,8 @@ jobs:
         run: |
           npm install
           npm run build
+        env:
+          VITE_CREATOR_API_KEY: ${{ secrets.VITE_CREATOR_API_KEY }}
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
