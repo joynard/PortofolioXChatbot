@@ -317,7 +317,9 @@ a:hover {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.8rem 1.5rem;
-  background: linear-gradient(135deg, var(--color-primary) 0%, hsl(263, 80%, 55%) 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, hsl(263, 80%, 55%) 50%, var(--color-primary) 100%);
+  background-size: 200% 200%;
+  animation: gradient-flow 12s ease infinite;
   border: none;
   border-radius: 8px;
   color: white;
@@ -843,6 +845,12 @@ a:hover {
   50% { opacity: 0; }
 }
 
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 /* Chat Input Bar */
 .chat-input-panel {
   padding: 1.25rem;
@@ -886,7 +894,9 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--color-primary) 0%, hsl(263, 80%, 55%) 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, hsl(263, 80%, 55%) 50%, var(--color-primary) 100%);
+  background-size: 200% 200%;
+  animation: gradient-flow 12s ease infinite;
   border: none;
   color: white;
   cursor: pointer;
