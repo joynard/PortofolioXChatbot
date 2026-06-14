@@ -160,16 +160,6 @@ function Settings({ apiKey, setApiKey, githubUsername, setGithubUsername, modelN
             <span>Save Configuration</span>
           </button>
         </form>
-
-        <div className="status-badge warning" style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
-          <Info size={20} style={{ flexShrink: 0, marginTop: '2px' }} />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-            <span style={{ fontWeight: '600' }}>Quick Deployment Note</span>
-            <span style={{ fontSize: '0.8rem', lineHeight: '1.4' }}>
-              To host this site publicly on GitHub Pages, push the project to a GitHub repository, enable Actions, and let the included deploy workflow automatically handle publication.
-            </span>
-          </div>
-        </div>
       </div>
     </div>
   );

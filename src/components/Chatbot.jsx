@@ -113,8 +113,7 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
             <button 
               id="clear-chat-btn"
               onClick={handleClearHistory} 
-              className="btn-github" 
-              style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', width: 'auto' }}
+              className="btn-clear-chat" 
               title="Clear chat history"
             >
               <Trash2 size={14} />
