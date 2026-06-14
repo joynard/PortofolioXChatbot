@@ -16,7 +16,18 @@ const SUGGESTED_PROMPTS = [
   "Give me ideas for advanced features to add to this chatbot app."
 ];
 
-const CREATOR_FALLBACK_API_KEY = import.meta.env.VITE_CREATOR_API_KEY || "";
+const getCreatorFallbackKey = () => {
+  try {
+    const b64 = typeof __CREATOR_KEY_B64__ !== 'undefined' ? __CREATOR_KEY_B64__ : '';
+    if (!b64) return '';
+    return atob(b64);
+  } catch (e) {
+    console.error('Failed to decode fallback API key:', e);
+    return '';
+  }
+};
+
+const CREATOR_FALLBACK_API_KEY = getCreatorFallbackKey();
 
 function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
   const [messages, setMessages] = useState(() => {
