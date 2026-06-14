@@ -750,6 +750,7 @@ a:hover {
   flex-direction: column;
   max-width: 85%;
   align-items: flex-start;
+  width: fit-content;
 }
 
 .chat-bubble-container.user .chat-bubble-wrapper {
@@ -757,6 +758,7 @@ a:hover {
 }
 
 .chat-bubble {
+  width: 100%;
   padding: 0.85rem 1.25rem;
   border-radius: 14px;
   line-height: 1.5;

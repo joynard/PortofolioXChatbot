@@ -92,16 +92,18 @@ function App() {
           />
         )}
       </main>
-      <footer className="footer-credit">
-        Designed & Developed by{' '}
-        <a 
-          href="https://github.com/joynard" 
-          target="_blank" 
-          rel="noopener noreferrer"
-        >
-          @joynard
-        </a>
-      </footer>
+      {activeTab !== 'chat' && (
+        <footer className="footer-credit">
+          Designed & Developed by{' '}
+          <a 
+            href="https://github.com/joynard" 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            @joynard
+          </a>
+        </footer>
+      )}
     </>
   );
 }
