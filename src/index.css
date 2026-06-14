@@ -750,7 +750,6 @@ a:hover {
   flex-direction: column;
   max-width: 85%;
   align-items: flex-start;
-  width: 100%;
 }
 
 .chat-bubble-container.user .chat-bubble-wrapper {
@@ -758,7 +757,6 @@ a:hover {
 }
 
 .chat-bubble {
-  width: 100%;
   padding: 0.85rem 1.25rem;
   border-radius: 14px;
   line-height: 1.5;
@@ -933,18 +931,23 @@ pre:hover .code-copy-btn {
 .chat-input-wrapper {
   display: flex;
   gap: 0.75rem;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .chat-input {
   flex: 1;
-  padding: 0.85rem 1.25rem;
+  padding: 0.8rem 1.25rem;
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid var(--border-glass);
-  border-radius: 99px;
+  border-radius: 18px;
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 0.95rem;
+  line-height: 1.4;
+  resize: none;
+  min-height: 44px;
+  max-height: 100px;
+  overflow-y: auto;
   transition: all var(--transition-fast);
 }
 

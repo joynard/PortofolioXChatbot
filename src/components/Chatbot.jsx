@@ -44,6 +44,22 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
   
   const messagesEndRef = useRef(null);
   const chatContainerRef = useRef(null);
+  const textareaRef = useRef(null);
+
+  // Auto-grow textarea height to fit content, up to 100px
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 100)}px`;
+    }
+  }, [inputValue]);
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
 
   // Inject copy buttons to code blocks dynamically when messages load
   useEffect(() => {
@@ -339,14 +355,16 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
           className="chat-input-panel"
         >
           <div className="chat-input-wrapper">
-            <input
+            <textarea
+              ref={textareaRef}
               id="chat-message-input"
-              type="text"
               placeholder="Ask anything, e.g. explain React lifecycle..."
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleKeyDown}
               disabled={isLoading}
               className="chat-input"
+              rows={1}
               autoComplete="off"
               autoCorrect="off"
               spellCheck="false"

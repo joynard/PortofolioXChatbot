@@ -167,7 +167,7 @@ function Portfolio({ githubUsername, onNavigateToSettings, isCreatorFallback }) 
               className="profile-avatar"
             />
             {isCreatorFallback && (
-              <div className="status-badge warning" style={{ fontSize: '0.75rem', padding: '0.65rem 0.8rem', width: '100%', display: 'flex', flexDirection: 'column', gap: '0.25rem', textAlign: 'left', lineHeight: '1.35' }}>
+              <div className="status-badge warning" style={{ fontSize: '0.75rem', padding: '0.65rem 0.8rem', width: '100%', display: 'flex', flexDirection: 'column', gap: '0.25rem', textAlign: 'center', lineHeight: '1.35' }}>
                 <span style={{ fontWeight: '700', alignSelf: 'center', marginBottom: '0.1rem' }}>Creator Hall of Fame</span>
                 <span style={{ fontSize: '0.7rem', opacity: 0.9 }}>
                   Showing creator's portfolio since no username was configured.
