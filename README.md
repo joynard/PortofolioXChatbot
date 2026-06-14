@@ -1,78 +1,76 @@
 # DevHub.AI — Personal Chatbot & GitHub Portfolio
 
-Sebuah website portofolio pribadi premium yang dilengkapi dengan workspace chat AI terintegrasi menggunakan Google AI Studio API (model Gemma & Gemini) dan daftar repositori GitHub yang diperbarui secara dinamis.
+A premium personal portfolio website equipped with an integrated AI chat workspace powered by the Google AI Studio API (supporting Gemma & Gemini models) and a dynamically updated GitHub repository listing.
 
-![Aesthetic UI](https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop)
-
-## Fitur Utama
+## Key Features
 
 1. **Portfolio Hub**:
-   - Menampilkan profil GitHub beserta statistik (Repos, Followers, Following).
-   - Menampilkan grid interaktif dari repositori publik Anda.
-   - Dilengkapi fitur pencarian/filter repositori secara instan berdasarkan nama, deskripsi, atau bahasa pemrograman.
-   - Tautan langsung ke masing-masing proyek GitHub dan profil utama.
+   - Displays your GitHub profile details along with stats (Repositories, Followers, Following).
+   - Renders an interactive grid of your public repositories.
+   - Features instant search/filtering by repository name, description, or programming language.
+   - Direct links to individual GitHub project repositories and your main profile page.
    
 2. **AI Workspace**:
-   - Berinteraksi langsung dengan model AI terkemuka seperti **Gemma 2 27B/9B** dan **Gemini 2.5 Flash / 1.5 Pro**.
-   - Dilengkapi format Markdown lengkap, rendering blok kode programming, list, tabel, dan quote.
-   - Pilihan preset pertanyaan populer untuk mempercepat pemakaian.
-   - Session caching: riwayat chat tetap aman saat Anda berpindah tab.
+   - Interact directly with state-of-the-art AI models like **Gemma 4 31B/26B** and **Gemini 3.5/2.5/2.0** series.
+   - Supports full Markdown formatting, code block syntax highlighting, lists, tables, and blockquotes.
+   - Preset starter questions to speed up interactions.
+   - Session caching: chat history is preserved when switching tabs.
 
 3. **Secure Settings**:
-   - Penyimpanan kredensial API Key Google AI Studio langsung di dalam `localStorage` browser Anda. Kunci API Anda aman dan tidak akan pernah terunggah ke repositori GitHub.
-   - Konfigurasi username GitHub dinamis.
+   - Storing Google AI Studio API Key credentials directly in your browser's `localStorage`. Your API key remains secure and is never uploaded to GitHub.
+   - Dynamic GitHub username configuration.
 
 4. **Premium Design**:
-   - Tampilan Cyber Obsidian dengan visualisasi glassmorphism modern.
-   - Responsif untuk semua ukuran layar (Mobile, Tablet, Desktop).
-   - Animasi transisi yang halus dan ergonomis.
+   - Obsidian theme with modern warm amber/bronze glassmorphism styling.
+   - Responsive across all device form factors (Mobile, Tablet, Desktop).
+   - Smooth, fluid, and organic transitions.
 
 ---
 
-## Cara Menjalankan Secara Lokal
+## How to Run Locally
 
-Pastikan Anda telah menginstal [Node.js](https://nodejs.org/).
+Make sure you have [Node.js](https://nodejs.org/) installed.
 
-1. **Kloning Repositori**:
+1. **Clone the Repository**:
    ```bash
-   git clone <url-repositori-anda>
+   git clone <your-repository-url>
    cd Chatbot
    ```
 
-2. **Instal Dependensi**:
+2. **Install Dependencies**:
    ```bash
    npm install
    ```
 
-3. **Jalankan Development Server**:
+3. **Run the Development Server**:
    ```bash
    npm run dev
    ```
-   Buka `http://localhost:5173` di browser Anda.
+   Open `http://localhost:5173` in your browser.
 
 ---
 
-## Cara Deploy ke GitHub Pages
+## How to Deploy to GitHub Pages
 
-Proyek ini telah dilengkapi dengan alur kerja GitHub Actions (`.github/workflows/deploy.yml`) untuk deploy otomatis secara gratis ke GitHub Pages.
+This project is configured with a GitHub Actions workflow (`.github/workflows/deploy.yml`) to automatically compile and host the app on GitHub Pages for free.
 
-1. **Buat Repositori Baru di GitHub** (misal namanya `my-portfolio`).
-2. **Inisialisasi Git Lokal dan Hubungkan**:
+1. **Create a New Repository on GitHub** (e.g., `my-portfolio`).
+2. **Initialize Git and Push**:
    ```bash
    git init
    git add .
    git commit -m "Initial commit with DevHub.AI"
    git branch -M main
-   git remote add origin https://github.com/<username-github-anda>/<nama-repo-anda>.git
+   git remote add origin https://github.com/<your-github-username>/<your-repo-name>.git
    git push -u origin main
    ```
-3. **Konfigurasi Izin GitHub Actions**:
-   - Buka halaman repositori Anda di GitHub.
-   - Buka **Settings** -> **Actions** -> **General**.
-   - Gulir ke bawah ke bagian **Workflow permissions**, pilih **Read and write permissions**, lalu klik **Save**.
-4. **Konfigurasi GitHub Pages**:
-   - Setelah Action selesai berjalan (cek tab **Actions** di GitHub), sebuah branch baru bernama `gh-pages` akan otomatis terbentuk.
-   - Buka **Settings** -> **Pages**.
-   - Di bawah **Build and deployment** -> **Source**, pilih **Deploy from a branch**.
-   - Di bawah **Branch**, pilih `gh-pages` dan folder `/ (root)`, lalu klik **Save**.
-   - Website Anda akan langsung aktif dalam beberapa menit di alamat `https://<username-github-anda>.github.io/<nama-repo-anda>/`.
+3. **Configure GitHub Actions Workflow Permissions**:
+   - Open your repository page on GitHub.
+   - Navigate to **Settings** -> **Actions** -> **General**.
+   - Scroll down to the **Workflow permissions** section, select **Read and write permissions**, and click **Save**.
+4. **Configure GitHub Pages Source**:
+   - Once the Action run completes successfully (check the **Actions** tab on GitHub), a new branch named `gh-pages` will be automatically created.
+   - Go to **Settings** -> **Pages** in the left sidebar.
+   - Under **Build and deployment** -> **Source**, select **Deploy from a branch**.
+   - Under **Branch**, select `gh-pages` and the `/ (root)` folder, and click **Save**.
+   - Your website will go live in a few minutes at `https://<your-github-username>.github.io/<your-repo-name>/`.
