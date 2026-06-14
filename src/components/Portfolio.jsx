@@ -72,6 +72,24 @@ function Portfolio({ githubUsername, onNavigateToSettings, isCreatorFallback }) 
     }
   }, [githubUsername]);
 
+  const [typedText, setTypedText] = useState("");
+  const fullText = `"There are so many more incredible things built in private, but since this only lists public repositories, you're seeing just a fraction of what the creator has made."`;
+
+  useEffect(() => {
+    if (isCreatorFallback) {
+      let index = 0;
+      setTypedText("");
+      const interval = setInterval(() => {
+        setTypedText((prev) => prev + fullText.charAt(index));
+        index++;
+        if (index >= fullText.length) {
+          clearInterval(interval);
+        }
+      }, 30);
+      return () => clearInterval(interval);
+    }
+  }, [isCreatorFallback]);
+
   const filteredRepos = repos.filter(repo => {
     const nameMatches = repo.name.toLowerCase().includes(searchQuery.toLowerCase());
     const descMatches = repo.description && repo.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -130,8 +148,8 @@ function Portfolio({ githubUsername, onNavigateToSettings, isCreatorFallback }) 
                 <span style={{ fontSize: '0.7rem', opacity: 0.9 }}>
                   Showing creator's portfolio since no username was configured.
                 </span>
-                <span style={{ fontSize: '0.68rem', opacity: 0.8, borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '0.25rem', marginTop: '0.25rem', fontStyle: 'italic' }}>
-                  "There are so many more incredible things built in private, but since this only lists public repositories, you're seeing just a fraction of what the creator has made."
+                <span style={{ fontSize: '0.68rem', opacity: 0.8, borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '0.25rem', marginTop: '0.25rem', fontStyle: 'italic', minHeight: '48px', display: 'block' }}>
+                  {typedText}
                 </span>
               </div>
             )}
