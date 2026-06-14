@@ -63,36 +63,69 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
     }
   };
 
-  // Inject copy buttons to code blocks dynamically when messages load
+  // Set up long-press copy gesture on code blocks dynamically when messages load
   useEffect(() => {
     if (!chatContainerRef.current) return;
     const preElements = chatContainerRef.current.querySelectorAll('pre');
+    
     preElements.forEach((pre) => {
-      if (pre.querySelector('.code-copy-btn')) return;
+      if (pre.getAttribute('data-has-copy-gesture')) return;
+      pre.setAttribute('data-has-copy-gesture', 'true');
 
-      const button = document.createElement('button');
-      button.className = 'code-copy-btn';
-      button.type = 'button';
-      button.innerHTML = '<span>Copy</span>';
-      
-      pre.style.position = 'relative';
+      let pressTimer = null;
 
-      button.addEventListener('click', () => {
-        const codeElement = pre.querySelector('code');
-        if (codeElement) {
-          const codeText = codeElement.innerText;
-          navigator.clipboard.writeText(codeText).then(() => {
-            button.innerHTML = '<span>Copied!</span>';
-            button.classList.add('copied');
-            setTimeout(() => {
-              button.innerHTML = '<span>Copy</span>';
-              button.classList.remove('copied');
-            }, 2000);
-          });
+      const startPress = (e) => {
+        if (e.type === 'mousedown' && e.button !== 0) return;
+        
+        if (pressTimer) clearTimeout(pressTimer);
+
+        pre.style.transition = 'transform var(--transition-fast), border-color var(--transition-fast)';
+        pre.style.transform = 'scale(0.995)';
+        pre.style.borderColor = 'var(--color-primary)';
+
+        pressTimer = setTimeout(() => {
+          const codeElement = pre.querySelector('code');
+          if (codeElement) {
+            const codeText = codeElement.innerText;
+            navigator.clipboard.writeText(codeText).then(() => {
+              pre.style.transform = 'none';
+              pre.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+
+              let toast = pre.querySelector('.code-toast-overlay');
+              if (!toast) {
+                toast = document.createElement('div');
+                toast.className = 'code-toast-overlay';
+                toast.innerHTML = '<span>Snippet Copied!</span>';
+                pre.appendChild(toast);
+              }
+              
+              toast.classList.add('show');
+              
+              setTimeout(() => {
+                toast.classList.remove('show');
+                pre.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+              }, 2000);
+            });
+          }
+          pressTimer = null;
+        }, 800);
+      };
+
+      const cancelPress = () => {
+        if (pressTimer) {
+          clearTimeout(pressTimer);
+          pressTimer = null;
         }
-      });
+        pre.style.transform = 'none';
+        pre.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+      };
 
-      pre.appendChild(button);
+      pre.addEventListener('mousedown', startPress);
+      pre.addEventListener('touchstart', startPress, { passive: true });
+      pre.addEventListener('mouseup', cancelPress);
+      pre.addEventListener('mouseleave', cancelPress);
+      pre.addEventListener('touchend', cancelPress);
+      pre.addEventListener('touchmove', cancelPress);
     });
   }, [messages, isLoading]);
 
