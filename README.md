@@ -1,4 +1,4 @@
-# DevHub.AI — Personal Chatbot & GitHub Portfolio
+# DevHub.AI Personal Chatbot & GitHub Portfolio
 
 A premium personal portfolio website equipped with an integrated AI chat workspace powered by the Google AI Studio API (supporting Gemma & Gemini models) and a dynamically updated GitHub repository listing.
 
