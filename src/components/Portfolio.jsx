@@ -51,7 +51,7 @@ function Portfolio({ githubUsername, onNavigateToSettings, isCreatorFallback }) 
       setProfile(profileData);
       setRepos(reposData);
       
-      // Cache details in sessionStorage
+      // Cache details in sessionStorages
       sessionStorage.setItem('github_profile', JSON.stringify(profileData));
       sessionStorage.setItem('github_repos', JSON.stringify(reposData));
     } catch (err) {
