@@ -10,7 +10,7 @@ marked.setOptions({
 });
 
 const SUGGESTED_PROMPTS = [
-  "Explain the core features of the Gemma 4 models.",
+  "Explain the core features of the Gemini 3.5 models.",
   "How can I set up automated deployments with GitHub Actions?",
   "Write a clean CSS glassmorphic card design template.",
   "Give me ideas for advanced features to add to this chatbot app."

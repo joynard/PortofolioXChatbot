@@ -1,6 +1,6 @@
 # DevHub.AI Personal Chatbot & GitHub Portfolio
 
-A premium personal portfolio website equipped with an integrated AI chat workspace powered by the Google AI Studio API (supporting Gemma & Gemini models) and a dynamically updated GitHub repository listing.
+A premium personal portfolio website equipped with an integrated AI chat workspace powered by the Google AI Studio API (supporting Gemini models) and a dynamically updated GitHub repository listing.
 
 ## Key Features
 
@@ -11,7 +11,7 @@ A premium personal portfolio website equipped with an integrated AI chat workspa
    - Direct links to individual GitHub project repositories and your main profile page.
    
 2. **AI Workspace**:
-   - Interact directly with state-of-the-art AI models like **Gemma 4 31B/26B** and **Gemini 3.5/2.5/2.0** series.
+   - Interact directly with state-of-the-art AI models like the **Gemini 3.5/2.5/2.0** series.
    - Supports full Markdown formatting, code block syntax highlighting, lists, tables, and blockquotes.
    - Preset starter questions to speed up interactions.
    - Session caching: chat history is preserved when switching tabs.

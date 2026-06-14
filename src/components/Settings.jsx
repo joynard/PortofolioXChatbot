@@ -121,7 +121,7 @@ function Settings({ apiKey, setApiKey, githubUsername, setGithubUsername, modelN
                 <input
                   id="custom-model-input"
                   type="text"
-                  placeholder="e.g. gemma-2-27b-it"
+                  placeholder="e.g. gemini-3.5-pro"
                   value={customModel}
                   onChange={(e) => setCustomModel(e.target.value)}
                   className="input-field"
