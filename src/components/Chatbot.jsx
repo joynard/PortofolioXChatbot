@@ -101,9 +101,14 @@ function Chatbot({ apiKey, modelName, onNavigateToSettings }) {
     });
   };
 
-  // Keep scroll focused on latest message
+  // Keep scroll focused on latest message by scrolling the container directly to avoid shifting the viewport on mobile
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   }, [messages, isLoading]);
 
   // Sync messages to sessionStorage
