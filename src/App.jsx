@@ -7,7 +7,7 @@ import Settings from './components/Settings';
 function App() {
   const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || '');
   const [githubUsername, setGithubUsername] = useState(() => localStorage.getItem('github_username') || '');
-  const [modelName, setModelName] = useState(() => localStorage.getItem('gemini_model') || 'gemma-4-31b');
+  const [modelName, setModelName] = useState(() => localStorage.getItem('gemini_model') || 'gemini-3.5-flash');
   const [activeTab, setActiveTab] = useState('portfolio');
 
   // Sync settings with localStorage

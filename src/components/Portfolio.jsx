@@ -125,10 +125,13 @@ function Portfolio({ githubUsername, onNavigateToSettings, isCreatorFallback }) 
               className="profile-avatar"
             />
             {isCreatorFallback && (
-              <div className="status-badge warning" style={{ fontSize: '0.75rem', padding: '0.6rem 0.8rem', width: '100%', display: 'flex', flexDirection: 'column', gap: '0.15rem', textAlign: 'center', lineHeight: '1.3' }}>
-                <span style={{ fontWeight: '700' }}>Creator Hall of Fame</span>
-                <span style={{ fontSize: '0.7rem', opacity: 0.85 }}>
+              <div className="status-badge warning" style={{ fontSize: '0.75rem', padding: '0.65rem 0.8rem', width: '100%', display: 'flex', flexDirection: 'column', gap: '0.25rem', textAlign: 'left', lineHeight: '1.35' }}>
+                <span style={{ fontWeight: '700', alignSelf: 'center', marginBottom: '0.1rem' }}>Creator Hall of Fame</span>
+                <span style={{ fontSize: '0.7rem', opacity: 0.9 }}>
                   Showing creator's portfolio since no username was configured.
+                </span>
+                <span style={{ fontSize: '0.68rem', opacity: 0.8, borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '0.25rem', marginTop: '0.25rem', fontStyle: 'italic' }}>
+                  "There are so many more incredible things built in private, but since this only lists public repositories, you're seeing just a fraction of what the creator has made."
                 </span>
               </div>
             )}
@@ -197,17 +200,19 @@ function Portfolio({ githubUsername, onNavigateToSettings, isCreatorFallback }) 
           ) : (
             <div className="repo-grid">
               {filteredRepos.map((repo) => (
-                <div key={repo.id} className="repo-card">
+                <a 
+                  key={repo.id} 
+                  href={repo.html_url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="repo-card"
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
                   <div className="repo-header">
                     <div className="repo-name-row">
-                      <a 
-                        href={repo.html_url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        style={{ fontWeight: '600', fontSize: '1.05rem', color: 'var(--text-primary)' }}
-                      >
+                      <h3 style={{ fontWeight: '600', fontSize: '1.05rem', color: 'var(--text-primary)' }}>
                         {repo.name}
-                      </a>
+                      </h3>
                       <ExternalLink size={14} style={{ opacity: 0.5 }} />
                     </div>
                     <p className="repo-desc">{repo.description || 'No description provided.'}</p>
@@ -234,7 +239,7 @@ function Portfolio({ githubUsername, onNavigateToSettings, isCreatorFallback }) 
                       </span>
                     </div>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           )}
