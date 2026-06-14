@@ -918,3 +918,150 @@ a:hover {
   border-color: rgba(255, 255, 255, 0.2);
   color: var(--text-primary);
 }
+
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 600px) {
+  /* Body & App Container */
+  .app-container {
+    padding: 0 0.75rem 0.75rem 0.75rem;
+  }
+
+  /* Headings size reduction */
+  h1 { font-size: 1.4rem !important; }
+  h2 { font-size: 1.25rem !important; }
+  h3 { font-size: 1.05rem !important; }
+  p { font-size: 0.85rem !important; }
+
+  /* Navbar styling adjustments */
+  .navbar {
+    margin: 0.5rem 0.75rem;
+    padding: 0.75rem 1rem;
+    height: auto;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .brand {
+    font-size: 1.1rem;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .nav-item {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+    gap: 0.35rem;
+    border-radius: 20px;
+  }
+
+  /* Hide navbar text on extremely small screens to maintain layout */
+  @media (max-width: 380px) {
+    .nav-item span {
+      display: none;
+    }
+    .nav-item {
+      padding: 0.6rem;
+      border-radius: 50%;
+    }
+  }
+
+  /* Portfolio Layout */
+  .portfolio-layout {
+    gap: 1rem;
+  }
+
+  .profile-card {
+    padding: 1.25rem;
+  }
+
+  .profile-avatar {
+    width: 90px;
+    height: 90px;
+  }
+
+  .repo-grid-container {
+    padding-right: 0;
+  }
+
+  .portfolio-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .portfolio-title .input-container {
+    width: 100% !important;
+  }
+
+  .repo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .repo-card {
+    min-height: auto;
+    padding: 1rem;
+  }
+
+  /* Chat Layout */
+  .chat-banner {
+    padding: 0.6rem 1rem;
+  }
+
+  .chat-banner-model {
+    font-size: 0.75rem;
+  }
+
+  .chat-messages {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .welcome-message {
+    margin: 1.5rem auto;
+    padding: 0 0.5rem;
+  }
+
+  .welcome-message h2 {
+    font-size: 1.4rem !important;
+  }
+
+  .chat-bubble {
+    max-width: 90%;
+    font-size: 0.85rem;
+    padding: 0.7rem 0.95rem;
+  }
+
+  .chat-input-panel {
+    padding: 0.85rem;
+  }
+
+  .chat-input {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .btn-send {
+    width: 38px;
+    height: 38px;
+  }
+
+  /* Settings Page */
+  .settings-container {
+    padding: 1.25rem;
+    margin: 1rem auto;
+  }
+
+  .settings-card {
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+
+  .input-field, .select-field {
+    font-size: 0.85rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
+}
