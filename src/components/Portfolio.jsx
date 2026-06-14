@@ -73,20 +73,44 @@ function Portfolio({ githubUsername, onNavigateToSettings, isCreatorFallback }) 
   }, [githubUsername]);
 
   const [typedText, setTypedText] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
   const fullText = `"There are so many more incredible things built in private, but since this only lists public repositories, you're seeing just a fraction of what the creator has made."`;
 
   useEffect(() => {
     if (isCreatorFallback) {
-      let index = 0;
+      setIsTyping(true);
       setTypedText("");
-      const interval = setInterval(() => {
-        setTypedText((prev) => prev + fullText.charAt(index));
-        index++;
-        if (index >= fullText.length) {
-          clearInterval(interval);
+      let index = 0;
+      let timeoutId;
+
+      const typeChar = () => {
+        if (index < fullText.length) {
+          const nextChar = fullText.charAt(index);
+          setTypedText((prev) => prev + nextChar);
+          index++;
+
+          let delay = 35;
+          if (nextChar === ',') {
+            delay = 280;
+          } else if (nextChar === '.') {
+            delay = 500;
+          } else if (nextChar === ' ') {
+            delay = Math.random() * 20 + 20;
+          } else {
+            delay = Math.random() * 15 + 25;
+          }
+
+          timeoutId = setTimeout(typeChar, delay);
+        } else {
+          setIsTyping(false);
         }
-      }, 30);
-      return () => clearInterval(interval);
+      };
+
+      typeChar();
+
+      return () => {
+        if (timeoutId) clearTimeout(timeoutId);
+      };
     }
   }, [isCreatorFallback]);
 
@@ -150,6 +174,7 @@ function Portfolio({ githubUsername, onNavigateToSettings, isCreatorFallback }) 
                 </span>
                 <span style={{ fontSize: '0.68rem', opacity: 0.8, borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '0.25rem', marginTop: '0.25rem', fontStyle: 'italic', minHeight: '48px', display: 'block' }}>
                   {typedText}
+                  {isTyping && <span className="typing-cursor">|</span>}
                 </span>
               </div>
             )}

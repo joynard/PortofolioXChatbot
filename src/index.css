@@ -830,6 +830,19 @@ a:hover {
   50% { transform: translateY(-4px); }
 }
 
+.typing-cursor {
+  display: inline-block;
+  margin-left: 3px;
+  color: var(--color-primary);
+  font-weight: 700;
+  animation: cursor-blink 0.8s infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 /* Chat Input Bar */
 .chat-input-panel {
   padding: 1.25rem;
@@ -1022,6 +1035,7 @@ a:hover {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;
+    padding: 0 1rem;
   }
 
   .portfolio-title .input-container {
